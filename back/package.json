@@ -1,0 +1,29 @@
+{
+  "name": "jogosturnosapi",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/caua989/JogosTurnosAPI#readme",
+  "bugs": {
+    "url": "https://github.com/caua989/JogosTurnosAPI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caua989/JogosTurnosAPI.git"
+  },
+  "license": "ISC",
+  "author": "caua e gabriela",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.6",
+    "sequelize": "^6.37.8"
+  }
+}
