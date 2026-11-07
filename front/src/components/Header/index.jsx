@@ -14,7 +14,19 @@ function Header() {
             Header
             <button
                  onClick={handleLogout}
-            >sair</button>
+            >iniciar jogo</button>
+
+            <button
+                 onClick={handleLogout}
+            >Atacar</button>
+
+            <button
+                 onClick={handleLogout}
+            >Curar</button>
+
+            <button
+                 onClick={handleLogout}
+            >Defender</button>
         </>
     )
 }

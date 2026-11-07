@@ -10,10 +10,6 @@ class RepositoryPartida {
         return Partida.findByPk(id)
     }
 
-    async BuscarVencedor(vencedor) {
-        return Partida.findOne({ where: { vencedor } })
-    }
-
     async Criar( descricao, data, vencedor) {
         await Partida.create({ descricao, data, vencedor })
     }

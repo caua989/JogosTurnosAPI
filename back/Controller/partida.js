@@ -16,7 +16,7 @@ class ControllerPartida {
     async Detalhe(req, res) {
         try {
             // session === usuario logado
-            const id = req.session.id
+            const id = req.params.id
             const partida = await ServicePartida
         .Detalhe(id)
 
@@ -41,11 +41,10 @@ class ControllerPartida {
 
     async Alterar(req, res) {
         try {
-            const id = req.session.id
+            const id = req.params.id
             const { descricao, data, vencedor } = req.body
 
-            await ServicePartida
-        .Alterar(id, descricao, data, vencedor)
+            await ServicePartida.Alterar(id, descricao, data, vencedor)
         
             res.status(200).send({ message: "Partida alterada com sucesso!" })
         } catch (error) {
@@ -55,7 +54,7 @@ class ControllerPartida {
 
     async Deletar(req, res) {
         try {
-            const id = req.session.id
+            const id = req.params.id
 
             await ServicePartida
         .Deletar(id)

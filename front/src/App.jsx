@@ -9,7 +9,7 @@ function App() {
     <>
       <Header />
         <Routes>
-            <Route path='/users' element={<Partida />} />
+            <Route path='/partida' element={<Partida />} />
           </Routes>
       <Footer/>
     </>

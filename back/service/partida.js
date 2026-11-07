@@ -1,8 +1,4 @@
 import RepositoryPartida from '../repository/partida.js'
-import bcrypt from 'bcrypt'
-//import jwt from 'jsonwebtoken'
-
-const SALT = 12
 
 class ServicePartida {
 
@@ -23,9 +19,8 @@ class ServicePartida {
             throw new Error("Favor informar todos os parametros")
         }
 
-        const cryptPass = await bcrypt.hash(vencedor, SALT)
 
-        await RepositoryPartida.Criar(descricao, data, cryptPass)
+        await RepositoryPartida.Criar(descricao, data, vencedor)
     }
 
     async Alterar(id, descricao, data, vencedor) {
@@ -33,11 +28,7 @@ class ServicePartida {
             throw new Error("Favor informar todos os parametros")
         }
         
-        const cryptPass = !vencedor
-            ? undefined
-            : await bcrypt.hash(vencedor, SALT)
-
-        await RepositoryPartida.Alterar(id, descricao, data, cryptPass)
+        await RepositoryPartida.Alterar(id, descricao, data, vencedor)
     }
 
     async Deletar(id) {
