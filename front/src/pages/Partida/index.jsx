@@ -1,74 +1,76 @@
+import { useEffect, useState } from 'react'
+import { getPartidas } from '../../api/partida.jsx'
 import './style.css'
-import { useNavigate } from 'react-router-dom'
 
 function Partida() {
+    const [partidas, setPartidas] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        let isMounted = true
+
+        const loadPartidas = async () => {
+            try {
+                const response = await getPartidas()
+                if (isMounted) {
+                    setPartidas(response.partidas)
+                }
+            } catch (requestError) {
+                if (isMounted) {
+                    setError(
+                        requestError.response?.data?.message
+                        || 'Não foi possível carregar a lista de usuários.'
+                    )
+                }
+            } finally {
+                if (isMounted) {
+                    setLoading(false)
+                }
+            }
+        }
+
+        loadPartidas()
+
+        return () => {
+            isMounted = false
+        }
+    }, [])
+
     return (
-        <>partida</>
+        <main className="partida-page">
+            <section className="partida-card" aria-labelledby="partida-title">
+                <h1 id="partida-title">Partidas</h1>
+                {loading && <p role="status">Carregando partidas...</p>}
+                {!loading && error && <p className="partida-error" role="alert">{error}</p>}
+                {!loading && !error && partidas.length > 0 && (
+                    <div className="partida-table-wrapper">
+                        <table className="partida-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {partidas.map((partida) => (
+                                    <tr key={partida.id}>
+                                        <td>{partida.id}</td>
+                                        <td>{partida.name}</td>
+                                        <td>{partida.email}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+                {!loading && !error && partidas.length === 0 && (
+                    <p>Nenhum usuário cadastrado.</p>
+                )}
+            </section>
+        </main>
     )
 }
 
 export default Partida
-
-
-
-
-
-/*
-import { useState } from 'react';
-
-
-export default function Login() {
-    const navigate =useNavigate()
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    
-    const handleSubmit = async (e) => {
-        e.preventDefault() //para o envio automatico do formulario
-         const response = await LoginUser(email, senha)
-         localStorage.setItem('token', response.token)
-
-         return navigate('/users')
-    }
-
-    return (
-        <div className="login-container">
-            <form className="login-form">
-                <h2>Login</h2>
-                <div className="input-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="text"
-                        id="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="senha">Senha:</label>
-                    <input
-                        type="password"
-                        id="senha"
-                        required
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)}
-                    />
-                </div>
-                <p>Não possui conta? <spam className="signup" onClick={() => { }}>Cadastre-se</spam></p>
-                <button
-                    className="button"
-                    type="submit"
-                    onClick={handleSubmit}
-                >Entrar </button>
-                <button
-                    className="button back-button"
-                    onClick={() => {}}
-                >
-                    Voltar
-                </button>
-            </form>
-        </div>
-    );
-}
-
-*/
